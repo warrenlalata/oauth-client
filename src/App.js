@@ -1,11 +1,15 @@
 import React from 'react';
-import { Button } from 'antd';
+import { BrowserRouter as Router } from 'react-router-dom';
+
 import './App.css';
+import { Nav } from './common';
+import Routes from './routes';
 
 const App = () => (
-  <div className="App">
-    <Button type="primary">Button</Button>
-  </div>
+  <Router>
+    <Nav />
+    <Routes />
+  </Router>
 );
 
 export default App;
