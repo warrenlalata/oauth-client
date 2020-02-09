@@ -6,4 +6,4 @@ const Show = () => (
   </div>
 );
 
-export { Show };
+export default Show;

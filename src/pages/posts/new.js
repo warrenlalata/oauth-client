@@ -6,4 +6,4 @@ const New = () => (
   </div>
 );
 
-export { New };
+export default New;

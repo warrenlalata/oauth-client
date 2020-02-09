@@ -1,6 +1,9 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { All, New, Show } from '../pages/posts';
+
+import All from '../pages/posts/all';
+import New from '../pages/posts/new';
+import Show from '../pages/posts/show';
 
 const PostsRoute = () => {
   return (

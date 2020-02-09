@@ -16,8 +16,7 @@ const NoMatch = () => (
   </div>
 );
 
-const isAuthenticated = false;
-
+const isAuthenticated = true;
 const Routes = () => (
   <Switch>
     <Route path="/" exact component={Home} />
