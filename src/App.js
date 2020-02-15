@@ -5,7 +5,6 @@ import store from './redux/store';
 import Layout from './pages/layout/layout';
 
 import './App.scss';
-import { Nav } from './common';
 import Routes from './routes';
 
 const App = () => (

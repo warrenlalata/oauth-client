@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_ROOT = 'http://localhost:8000/api';
+const API_ROOT = 'http://localhost:8000';
 
 // todo: get from storage
 const accessToken =
@@ -39,6 +39,10 @@ class ApiService {
 
   get(path) {
     return this.client.get(path).then(response => response.data);
+  }
+
+  post(path, body) {
+    return this.client.post(path, body).then(response => response.data);
   }
 }
 
