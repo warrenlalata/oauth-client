@@ -2,7 +2,8 @@ import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Posts from './posts';
 import Users from './users';
-import { Login, Register } from '../pages/auth';
+import Login from '../pages/auth/login';
+import { Register } from '../pages/auth';
 
 const Home = () => (
   <div className="App">
@@ -16,7 +17,7 @@ const NoMatch = () => (
   </div>
 );
 
-const isAuthenticated = true;
+const isAuthenticated = false;
 const Routes = () => (
   <Switch>
     <Route path="/" exact component={Home} />
