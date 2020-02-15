@@ -1,3 +1,3 @@
-import { FETCH_POSTS } from './types';
+import { REQUEST_POSTS } from './types';
 
-export const fetchPosts = () => ({ type: FETCH_POSTS });
+export const fetchPosts = () => ({ type: REQUEST_POSTS });

@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import { connect } from 'react-redux';
+import _isEmpty from 'lodash/isEmpty';
 import { login } from '../../redux/actions';
 
 class NormalLoginForm extends React.Component {
@@ -11,15 +12,20 @@ class NormalLoginForm extends React.Component {
     form.validateFields((err, values) => {
       if (!err) {
         const { email, password } = values;
-        console.log('Received values of form: ', values);
+        // console.log('Received values of form: ', values);
         doLogin({ email, password });
       }
     });
   };
 
   render() {
-    const { error, form, loading } = this.props;
+    const { error, form, loading, session } = this.props;
     const { getFieldDecorator } = form;
+    const isLoggedIn = !_isEmpty(session);
+
+    if (isLoggedIn) {
+      return <Redirect to="/" />;
+    }
 
     return (
       <Form onSubmit={this.handleSubmit} className="login-form">

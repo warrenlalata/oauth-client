@@ -1,7 +1,8 @@
-export const FETCH_POSTS = 'fetch_posts';
-export const FETCH_POSTS_SUCCESS = 'fetch_posts_success';
-export const FETCH_POSTS_ERROR = 'fetch_posts_error';
+// Auth
+export const REQUEST_POSTS = 'REQUEST_POSTS';
+export const REQUEST_POSTS_SUCCESS = 'REQUEST_POSTS_SUCCESS';
+export const REQUEST_POSTS_ERROR = 'REQUEST_POSTS_ERROR';
 
-export const LOGIN = 'login';
-export const LOGIN_SUCCESS = 'login_success';
-export const LOGIN_ERROR = 'login_error';
+export const LOGIN = 'LOGIN';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_ERROR = 'LOGIN_ERROR';

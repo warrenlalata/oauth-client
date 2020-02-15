@@ -1,5 +1,7 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import _isEmpty from 'lodash/isEmpty';
 import Posts from './posts';
 import Users from './users';
 import Login from '../pages/auth/login';
@@ -17,21 +19,35 @@ const NoMatch = () => (
   </div>
 );
 
-const isAuthenticated = false;
-const Routes = () => (
-  <Switch>
-    <Route path="/" exact component={Home} />
-    <Route path="/login" exact component={Login} />
-    <Route path="/register" exact component={Register} />
+const Routes = props => {
+  const isAuthenticated = !_isEmpty(props.session);
+  return (
+    <Switch>
+      <Route path="/" exact component={Home} />
+      <Route path="/login" exact component={Login} />
+      <Route path="/register" exact component={Register} />
 
-    <PrivateRoute path="/posts" component={Posts} />
-    <PrivateRoute path="/users" component={Users} />
+      <PrivateRoute
+        path="/posts"
+        component={Posts}
+        isAuthenticated={isAuthenticated}
+      />
+      <PrivateRoute
+        path="/users"
+        component={Users}
+        isAuthenticated={isAuthenticated}
+      />
 
-    <Route path="*" component={NoMatch} />
-  </Switch>
-);
+      <Route path="*" component={NoMatch} />
+    </Switch>
+  );
+};
 
-export const PrivateRoute = ({ component: Component, ...rest }) => (
+export const PrivateRoute = ({
+  component: Component,
+  isAuthenticated,
+  ...rest
+}) => (
   <Route
     {...rest}
     render={props =>
@@ -49,4 +65,8 @@ export const PrivateRoute = ({ component: Component, ...rest }) => (
   />
 );
 
-export default Routes;
+const mapStateToProps = ({ auth }) => ({
+  session: auth.session
+});
+
+export default connect(mapStateToProps)(Routes);

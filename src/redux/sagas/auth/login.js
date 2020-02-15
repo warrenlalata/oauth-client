@@ -1,11 +1,20 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 import { LOGIN, LOGIN_SUCCESS, LOGIN_ERROR } from '../../actions/types';
-import { loginFromApi } from '../../services/auth';
+import { loginFromApi, fetchCurrentUserFromApi } from '../../services/auth';
+
+const storeTokens = ({ accessToken, refreshToken }) => {
+  // todo: store in cookies with httpOnly: true
+  try {
+    localStorage.setItem('access_token', accessToken);
+    localStorage.setItem('refresh_token', refreshToken);
+  } catch (error) {
+    console.log('storeToken error: ', error);
+  }
+};
 
 function* login({ payload }) {
-  console.log('login saga: ', payload);
   const { email, password } = payload;
-  const finalPayload = {
+  const loginPayload = {
     grant_type: 'password',
     client_id: process.env.REACT_APP_CLIENT_ID,
     client_secret: process.env.REACT_APP_CLIENT_SECRET,
@@ -13,10 +22,17 @@ function* login({ payload }) {
     password,
     scope: ''
   };
-  console.log('final payload: ', finalPayload);
+
   try {
-    const user = yield call(loginFromApi, finalPayload);
-    yield put({ type: LOGIN_SUCCESS, payload: user });
+    const response = yield call(loginFromApi, loginPayload);
+    // store tokens before calling login success
+    const { access_token: accessToken, refresh_token: refreshToken } = response;
+    yield call(storeTokens, { accessToken, refreshToken });
+    // fetch current user
+    const currentUser = yield call(fetchCurrentUserFromApi);
+    // currentUser as session
+    const session = { ...currentUser.data, accessToken, refreshToken };
+    yield put({ type: LOGIN_SUCCESS, payload: session });
   } catch (error) {
     console.log(error);
     console.error(error.message);
