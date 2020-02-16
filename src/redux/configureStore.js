@@ -24,11 +24,12 @@ export default () => {
   const store = createStore(
     persistedReducer,
     compose(
-      applyMiddleware(sagaMiddleware, logger),
+      applyMiddleware(sagaMiddleware, logger)
+      // throws error when browser has no reduc devtools
       // eslint-disable-next-line no-underscore-dangle
-      window.__REDUX_DEVTOOLS_EXTENSION__ &&
-        // eslint-disable-next-line no-underscore-dangle
-        window.__REDUX_DEVTOOLS_EXTENSION__()
+      // window.__REDUX_DEVTOOLS_EXTENSION__ &&
+      // eslint-disable-next-line no-underscore-dangle
+      // window.__REDUX_DEVTOOLS_EXTENSION__()
     )
   );
   const persistor = persistStore(store);
