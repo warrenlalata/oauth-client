@@ -25,14 +25,10 @@ function* login({ payload }) {
 
   try {
     const response = yield call(loginFromApi, loginPayload);
-    // store tokens before calling login success
     const { access_token: accessToken, refresh_token: refreshToken } = response;
     yield call(storeTokens, { accessToken, refreshToken });
-    // fetch current user
     const currentUser = yield call(fetchCurrentUserFromApi);
-    // currentUser as session
-    const session = { ...currentUser.data, accessToken, refreshToken };
-    yield put({ type: LOGIN_SUCCESS, payload: session });
+    yield put({ type: LOGIN_SUCCESS, payload: currentUser.data });
   } catch (error) {
     console.log(error);
     console.error(error.message);
