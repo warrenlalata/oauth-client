@@ -31,8 +31,7 @@ instance.interceptors.request.use(
 );
 
 const refreshAuthLogic = failedRequest => {
-  console.log('failed!!');
-  return instance
+  return axios
     .post(`${URL}/oauth/token`, {
       grant_type: 'refresh_token',
       client_id: process.env.REACT_APP_CLIENT_ID,
@@ -41,7 +40,6 @@ const refreshAuthLogic = failedRequest => {
       scope: ''
     })
     .then(tokenRefreshResponse => {
-      console.log(tokenRefreshResponse.data.access_token);
       localStorage.setItem(
         'access_token',
         tokenRefreshResponse.data.access_token
