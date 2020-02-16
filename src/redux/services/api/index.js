@@ -12,6 +12,10 @@ class ApiService {
   post(path, body) {
     return this.client.post(path, body).then(response => response.data);
   }
+
+  delete(path) {
+    return this.client.delete(path).then(response => response.data);
+  }
 }
 
 export default new ApiService();

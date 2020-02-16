@@ -2,7 +2,6 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import { connect } from 'react-redux';
-import _isEmpty from 'lodash/isEmpty';
 import { login } from '../../redux/actions';
 
 class NormalLoginForm extends React.Component {
@@ -21,9 +20,8 @@ class NormalLoginForm extends React.Component {
   render() {
     const { error, form, loading, session } = this.props;
     const { getFieldDecorator } = form;
-    const isLoggedIn = !_isEmpty(session);
 
-    if (isLoggedIn) {
+    if (session) {
       return <Redirect to="/" />;
     }
 

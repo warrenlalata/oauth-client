@@ -2,16 +2,11 @@ import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import _isEmpty from 'lodash/isEmpty';
+import Home from '../pages/layout/home';
 import Posts from './posts';
 import Users from './users';
 import Login from '../pages/auth/login';
 import { Register } from '../pages/auth';
-
-const Home = () => (
-  <div className="App">
-    <h1>Home</h1>
-  </div>
-);
 
 const NoMatch = () => (
   <div className="App">
@@ -20,7 +15,8 @@ const NoMatch = () => (
 );
 
 const Routes = props => {
-  const isAuthenticated = !_isEmpty(props.session);
+  const { session } = props;
+  const isAuthenticated = !_isEmpty(session);
   return (
     <Switch>
       <Route path="/" exact component={Home} />
