@@ -7,6 +7,7 @@ const removeTokens = () => {
   try {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
+    localStorage.removeItem('persist:root');
   } catch (error) {
     console.log('removeTokens error: ', error);
   }

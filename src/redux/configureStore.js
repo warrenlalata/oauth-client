@@ -17,42 +17,24 @@ const persistConfig = {
   storage,
   whitelist: ['auth']
 };
-
 const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+const middlewares = [sagaMiddleware, logger];
 
 export default () => {
   const store = createStore(
     persistedReducer,
     compose(
-      applyMiddleware(sagaMiddleware, logger)
+      applyMiddleware(...middlewares),
       // throws error when browser has no reduc devtools
       // eslint-disable-next-line no-underscore-dangle
-      // window.__REDUX_DEVTOOLS_EXTENSION__ &&
-      // eslint-disable-next-line no-underscore-dangle
-      // window.__REDUX_DEVTOOLS_EXTENSION__()
+      window.__REDUX_DEVTOOLS_EXTENSION__ &&
+        // eslint-disable-next-line no-underscore-dangle
+        window.__REDUX_DEVTOOLS_EXTENSION__()
     )
   );
+
   const persistor = persistStore(store);
   sagaMiddleware.run(rootSaga);
-
   return { store, persistor };
 };
-
-// const sagaMiddleware = createSagaMiddleware();
-
-// const logger = createLogger({
-//   collapsed: true
-// });
-
-// const store = createStore(
-//   rootReducer,
-//   compose(
-//     applyMiddleware(sagaMiddleware, logger),
-//     // eslint-disable-next-line no-underscore-dangle
-//     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-//   )
-// );
-
-// sagaMiddleware.run(rootSaga);
-
-// export default store;
