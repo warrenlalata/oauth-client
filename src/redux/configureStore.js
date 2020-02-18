@@ -3,6 +3,7 @@ import createSagaMiddleware from 'redux-saga';
 import { createLogger } from 'redux-logger';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import { syncMiddleware } from 'redux-sync-reducer';
 import rootReducer from './reducers';
 import rootSaga from './sagas';
 
@@ -17,9 +18,10 @@ const persistConfig = {
   storage,
   whitelist: ['auth']
 };
+
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const middlewares = [sagaMiddleware, logger];
+const middlewares = [sagaMiddleware, syncMiddleware, logger];
 
 export default () => {
   const store = createStore(
